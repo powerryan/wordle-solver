@@ -220,5 +220,5 @@ function possiblePosition(word, letter) {
       }
     }
   }
-  return true;
+  return possible;
 }
