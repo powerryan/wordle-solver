@@ -111,7 +111,7 @@ function generateGuesses() {
     }
     else if (colors["present"] == color) {
       letters["present"].push(letter);
-      if (!correctPositions[letter]) {
+      if (!presentPositions[letter]) {
         presentPositions[letter] = [i%5];
       }
       else {
@@ -206,10 +206,17 @@ function containsLetter(word, letter) {
 }
 
 function possiblePosition(word, letter) {
+  var possible = false;
   for (var l = 0; l < 5; l++) {
     if (word[l] == letter) {
       if (presentPositions[letter].includes(l)) {
         return false;
+      }
+      else if (correctPositions[letter] && !correctPositions[letter].includes(l)) {
+        possible = true;
+      }
+      else if (!correctPositions[letter]) {
+        possible = true;
       }
     }
   }
