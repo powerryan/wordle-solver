@@ -15,21 +15,22 @@ body {
    vertical-align: middle;
 }
 .output{
-  line-height: 50px;
+  line-height: 45px;
   overflow: auto;
   white-space: nowrap;
   visibility:hidden;
   outline: none;
   border: 2px solid #404B99;
+  font-weight: bold;
   font-size: 1rem;
-  color: #bbb;
+  color: rgb(51, 153, 51);
   border-radius: 10px;
   display: inline-block;
   width: 350px;
   height: 50px;
   text-align: center;
   margin: auto;
-  background-color: black;
+  background-color: 111;
 }
 .primary {
   color: #404B99;
@@ -37,9 +38,14 @@ body {
   font-weight: bold;
   margin: 10px;
 }
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 .primary:hover {
   background-color: #404B99;
-  color: #222;
+  color: #000;
   border-color: #404B99;
 }
 .letter {
