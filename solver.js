@@ -75,6 +75,64 @@ function isWord(line) {
   return false;
 }
 
+function nextWord(num) {
+  var added = {};
+  for (var i = 0; i < 5; i++) {
+    var letter = document.querySelectorAll(".letter")[num+i].innerHTML.toLowerCase();
+    var color = document.querySelectorAll(".letter")[num+i].style.borderColor;
+    if (!letter.length) {
+      break;
+    }
+    // add to incorrect letter
+    if (colors["incorrect"] == color || !color) {
+      if (!letters["incorrect"].includes(letter)) {
+        letters["incorrect"].push(letter);
+      }
+      else if (presentPositions[letter] && !presentPositions[letter].include(i%5)) {
+        presentPositions[letter].push(i%5);
+      }
+    }
+    // add to correct letter
+    else if (colors["correct"] == color) {
+      if (!letters["correct"].includes(letter)) {
+        letters["correct"].push(letter);
+        if (!added[letter] && letters["present"].includes(letter)) {
+          letters["present"].splice(letters["present"].indexOf(letter), 1);
+        }
+      }
+      if (!correctPositions[letter]) {
+        correctPositions[letter] = [i%5];
+        taken.push(letter);
+      }
+      else if (!correctPositions[letter].includes(i%5)) {
+        correctPositions[letter].push(i%5);
+        taken.push(letter);
+      }
+    }
+    else if (colors["present"] == color) {
+      if (!added[letter]) {
+        added[letter] = 1;
+      }
+      else {
+        added[letter] += 1;
+      }
+      if (!letters["present"].includes(letter)) {
+        letters["present"].push(letter);
+      }
+      else if (letters["present"].filter(x => x == letter).length < added[letter]) {
+        letters["present"].push(letter);
+      }
+      if (!presentPositions[letter]) {
+        presentPositions[letter] = [i%5];
+      }
+      else if (!presentPositions[letter].includes(i%5)) {
+        presentPositions[letter].push(i%5);
+      }
+    }
+
+  }
+}
+
 function generateGuesses() {
   letters = {"correct": [], "incorrect":[], "present":[]};
   correctPositions = {};
@@ -85,40 +143,14 @@ function generateGuesses() {
     document.querySelector(".output").style.visibility = "visible";
     return
   }
-  for (var i = 0; i < document.querySelectorAll(".letter").length; i++) {
-    var letter = document.querySelectorAll(".letter")[i].innerHTML.toLowerCase();
-    var color = document.querySelectorAll(".letter")[i].style.borderColor;
-    if (!letter.length) {
-      break;
+  for (var i = 0; i < 6; i++) {
+    if (document.querySelectorAll(".letter")[(i * 5) + 4].innerHTML) {
+      nextWord(i*5);
+      console.log(letters);
+      console.log(correctPositions);
+      console.log(presentPositions);
+      console.log(taken);
     }
-    // add to incorrect letter
-    if (colors["incorrect"] == color || !color) {
-      letters["incorrect"].push(letter);
-      if (presentPositions[letter]) {
-        presentPositions[letter].push(i%5);
-      }
-    }
-    // add to correct letter
-    else if (colors["correct"] == color) {
-      letters["correct"].push(letter);
-      if (!correctPositions[letter]) {
-        correctPositions[letter] = [i%5];
-      }
-      else {
-        correctPositions[letter].push(i%5);
-      }
-      taken.push(letter);
-    }
-    else if (colors["present"] == color) {
-      letters["present"].push(letter);
-      if (!presentPositions[letter]) {
-        presentPositions[letter] = [i%5];
-      }
-      else {
-        presentPositions[letter].push(i%5);
-      }
-    }
-
   }
   for (var i = 0; i < words.length; i ++) {
     var correctLetters = 0;
@@ -148,15 +180,20 @@ function generateGuesses() {
     }
     // check for present letters
     if (!incorrect && correctLetters == taken.length) {
+
       var allPresent = true;
-      for (var letter = 0; letter < letters["present"].length; letter++) {
-        // ensure all present letters in word
-        if (!containsLetter(words[i], letters["present"][letter])) {
-          allPresent = false;
-        }
-        // ensure present letters in possible positions
-        else if (!possiblePosition(words[i], letters["present"][letter])) {
-          allPresent = false;
+      if (!containsLetter(words[i], letters["present"])) {
+        allPresent = false;
+      }
+      else {
+        for (var letter = 0; letter < letters["present"].length; letter++) {
+          // ensure all present letters in word
+
+          // ensure present letters in possible positions
+          if (!possiblePosition(words[i], letters["present"][letter])) {
+
+            allPresent = false;
+          }
         }
       }
       if (allPresent) {
@@ -164,6 +201,7 @@ function generateGuesses() {
       }
     }
   }
+
   document.querySelector(".output").innerHTML = "";
   for (var el = 0; el < answers.length - 1; el++) {
     document.querySelector(".output").innerHTML += answers[el].toUpperCase() + ", ";
@@ -192,17 +230,25 @@ function isCorrect(letter, position) {
         return true;
       }
     }
-
   return false;
 }
 
-function containsLetter(word, letter) {
-  for (var l = 0; l < word.length; l++) {
-    if (letter == word[l]) {
-      return true;
+function containsLetter(word, presentLetters) {
+  var count = 0;
+  var inWord;
+  for (var l = 0; l < presentLetters.length; l++) {
+    inWord = 0;
+    count = presentLetters.filter(x => x == presentLetters[l]).length;
+    for (var e = 0; e < 5; e++) {
+      if (word[e] == presentLetters[l]) {
+        inWord++;
+      }
+    }
+    if (inWord < count) {
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
 function possiblePosition(word, letter) {
@@ -212,8 +258,10 @@ function possiblePosition(word, letter) {
       if (presentPositions[letter].includes(l)) {
         return false;
       }
-      else if (correctPositions[letter] && !correctPositions[letter].includes(l)) {
-        possible = true;
+      else if (correctPositions[letter]) {
+        if (!correctPositions[letter].includes(l)) {
+          possible = true;
+        }
       }
       else if (!correctPositions[letter]) {
         possible = true;
