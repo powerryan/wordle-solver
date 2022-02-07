@@ -149,10 +149,6 @@ function generateGuesses() {
   for (var i = 0; i < 6; i++) {
     if (document.querySelectorAll(".letter")[(i * 5) + 4].innerHTML) {
       nextWord(i*5);
-      console.log(letters);
-      console.log(correctPositions);
-      console.log(presentPositions);
-      console.log(taken);
     }
   }
   for (var i = 0; i < words.length; i ++) {
