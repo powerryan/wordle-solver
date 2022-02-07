@@ -100,6 +100,9 @@ function nextWord(num) {
           letters["present"].splice(letters["present"].indexOf(letter), 1);
         }
       }
+      else if (!added[letter] && letters["present"].includes(letter)) {
+        letters["present"].splice(letters["present"].indexOf(letter), 1);
+      }
       if (!correctPositions[letter]) {
         correctPositions[letter] = [i%5];
         taken.push(letter);
