@@ -92,7 +92,7 @@ body {
   }
 }
 }
-@media only screen and (max-device-width: 1000px) {
+@media only screen and (max-width: 1000px) {
   .word {
     width: 80% !important;
     height: 9.5rem;
