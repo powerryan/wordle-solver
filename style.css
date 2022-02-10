@@ -5,8 +5,13 @@ body {
 .wrapper{
   margin-top: 50px;
 }
+.col-sm {
+  padding: 0px;
+  margin: 4px;
+}
 .word {
-  width: 350px;
+  width: 22rem;
+  height: 4.3rem;
   margin: auto;
 }
 .answer {
@@ -14,6 +19,7 @@ body {
    text-align: center;
    vertical-align: middle;
 }
+
 .output{
   line-height: 45px;
   overflow: auto;
@@ -21,7 +27,6 @@ body {
   visibility:hidden;
   outline: none;
   border: 2px solid #404B99;
-  font-weight: bold;
   font-size: 1rem;
   color: rgb(51, 153, 51);
   border-radius: 10px;
@@ -30,18 +35,14 @@ body {
   height: 50px;
   text-align: center;
   margin: auto;
-  background-color: 111;
+  background-color: black;
 }
 .primary {
   color: #404B99;
+  border: 2px solid;
   border-color: #404B99;
   font-weight: bold;
   margin: 10px;
-}
-::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent; /* make scrollbar transparent */
 }
 .primary:hover {
   background-color: #404B99;
@@ -63,14 +64,96 @@ body {
   font-weight: bold;
   color: #fff;
   border-radius: 10px;
-  width: 80px !important;
-  height: 60px !important;
-  line-height: 56px;
+  height: 100% !important;
+
   text-align: center;
-  margin: 4px;
   background-color: 333;
   padding: 0px;
 }
 .AC{
   font-size: 1.2rem;
+}
+@media only screen and (max-width: 576px) {
+  .word {
+    visibility: hidden;
+  }
+  .col-sm {
+    visibility: hidden;
+  }
+  .letter {
+    visibility: hidden;
+  }
+  .primary {
+    visibility: hidden;
+  }
+
+  .output{
+    visibility: hidden;
+  }
+}
+}
+@media only screen and (max-device-width: 1000px) {
+  .word {
+    width: 80% !important;
+    height: 9.5rem;
+  }
+  .col-sm {
+    padding: 0px;
+    margin: 8px;
+  }
+  .letter {
+    height: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: 5px solid;
+    border-color: #404B99;
+    font-size: 5rem;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 18px;
+    text-align: center;
+    background-color: 111;
+    padding: 0px;
+    vertical-align: middle;
+  }
+  .primary {
+    color: #404B99;
+    border: 5px solid;
+    border-radius: 18px;
+    border-color: #404B99;
+    font-weight: bold;
+    margin: 3rem;
+    height: 6rem;
+    width: 28rem;
+    font-size: 3rem;
+  }
+  .primary:hover {
+    background-color: #404B99;
+    color: #000;
+    border-color: #404B99;
+  }
+  .output{
+    line-height: 5rem;
+    overflow: auto;
+    white-space: nowrap;
+    visibility:hidden;
+    outline: none;
+    border: 5px solid #404B99;
+    font-size: 3rem;
+    color: rgb(51, 153, 51);
+    border-radius: 18px;
+    display: inline-block;
+    width: 80%;
+    height: 6rem;
+    text-align: center;
+    margin: auto;
+    background-color: black;
+  }
 }
