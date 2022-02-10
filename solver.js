@@ -15,8 +15,6 @@ for (var i = 0; i < document.querySelectorAll(".letter").length; i++) {
 }
 
 function changeColor() {
-  console.log("change color");
-  console.log(this.style.borderColor);
   if (!this.style.borderColor || this.style.borderColor == colors["incorrect"]) {
     this.style.borderColor = colors["present"];
   }
@@ -29,16 +27,10 @@ function changeColor() {
 }
 
 document.addEventListener("keyup", function(event) {
-  console.log("key press");
   for (var i = 0; i < document.querySelectorAll(".letter").length; i++) {
     var letter = document.querySelectorAll(".letter")[i].innerHTML;
-    console.log("inside loop");
-    console.log(letter);
-    console.log(event.keyCode);
     if (letter.length === 0 && event.keyCode >= 65 && event.keyCode <= 90) {
-      console.log("is a letter");
       if (i > 0 && (i+1) % 5 == 0) {
-        console.log("is it a word");
         var word = "";
         for (var j = i-4; j < i; j++) {
           word = word + document.querySelectorAll(".letter")[j].innerHTML;
@@ -48,7 +40,6 @@ document.addEventListener("keyup", function(event) {
           break;
         }
         else {
-          console.log("it is not a word");
           document.querySelectorAll(".letter")[i-4].innerHTML = "";
           document.querySelectorAll(".letter")[i-3].innerHTML = "";
           document.querySelectorAll(".letter")[i-2].innerHTML = "";
@@ -57,7 +48,6 @@ document.addEventListener("keyup", function(event) {
         }
       }
       else {
-        console.log(event.key.toUpperCase());
         document.querySelectorAll(".letter")[i].innerHTML = event.key.toUpperCase();
         break;
       }
@@ -407,9 +397,6 @@ function generateGuesses() {
       processWord(i*5);
     }
   }
-  console.log(possibleLetters);
-  console.log(mustContain);
-  console.log(containQuantity);
   var solution;
   for (var i = 0; i < words.length; i ++) {
     solution = true;
