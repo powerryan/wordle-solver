@@ -27,6 +27,7 @@ body {
   visibility:hidden;
   outline: none;
   border: 2px solid #404B99;
+  font-weight: bold;
   font-size: 1rem;
   color: rgb(51, 153, 51);
   border-radius: 10px;
