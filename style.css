@@ -73,6 +73,11 @@ body {
 .AC{
   font-size: 1.2rem;
 }
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 @media only screen and (max-width: 576px) {
   .word {
     visibility: hidden;
